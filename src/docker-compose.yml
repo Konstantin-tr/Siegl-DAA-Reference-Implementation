@@ -4,6 +4,7 @@ services:
   onlineretailsystem.host:
     environment:
       POSTGRES_CONNECTION: User ID=postgres;Password=postgres;Host=db;Port=5432;Database=postgres;Pooling=true;Connection Lifetime=0;
+      SKIP_SEEDING: true
     image: ${DOCKER_REGISTRY-}onlineretailsystemhost
     build:
       context: .

@@ -14,12 +14,16 @@ namespace OnlineRetailSystem.Actors.Orleans
 {
     public static class Extensions
     {
-        public static IHostBuilder AddDistributedActorsArchitecture(this IHostBuilder host, string? dbConnection)
+        public static IHostBuilder AddDistributedActorsArchitecture(this IHostBuilder host, string? dbConnection, bool? skipSeeding)
         {
             host.UseOrleans((_, siloBuilder) =>
             {
-                siloBuilder.UseTransactions()
-                .AddStartupTask<SeedDataTask>();
+                siloBuilder.UseTransactions();
+
+                if(skipSeeding is not true)
+                {
+                    siloBuilder.AddStartupTask<SeedDataTask>();
+                }
 
                 if (dbConnection is not null)
                 {
@@ -29,7 +33,11 @@ namespace OnlineRetailSystem.Actors.Orleans
                         a.ConnectionString = dbConnection;
                     }));
 
-                    siloBuilder.UseLocalhostClustering();
+                    siloBuilder.UseAdoNetClustering(a =>
+                    {
+                        a.Invariant = "Npgsql";
+                        a.ConnectionString = dbConnection;
+                    });
 
                     return;
                 }

@@ -16,8 +16,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var postgresConfig = builder.Configuration.GetValue<string?>("POSTGRES_CONNECTION");
+var skipSeeding = builder.Configuration.GetValue<bool?>("SKIP_SEEDING");
 
-builder.Host.AddDistributedActorsArchitecture(postgresConfig);
+builder.Host.AddDistributedActorsArchitecture(postgresConfig, skipSeeding);
 
 var app = builder.Build();
 
