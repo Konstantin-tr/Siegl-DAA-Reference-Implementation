@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Bogus" Version="35.5.1" />
+    <PackageReference Include="Microsoft.Orleans.Server" Version="8.1.0" />
+    <PackageReference Include="Microsoft.Orleans.Transactions" Version="8.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OnlineRetailSystem.Actors.CustomerSubdomain\OnlineRetailSystem.Actors.CustomerSubdomain.csproj" />
+    <ProjectReference Include="..\OnlineRetailSystem.Actors.ProductSubdomain\OnlineRetailSystem.Actors.ProductSubdomain.csproj" />
+    <ProjectReference Include="..\OnlineRetailSystem.Actors.ShoppingCartSubdomain\OnlineRetailSystem.Actors.ShoppingCartSubdomain.csproj" />
+  </ItemGroup>
+
+</Project>

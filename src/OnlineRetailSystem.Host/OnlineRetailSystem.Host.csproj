@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <InvariantGlobalization>true</InvariantGlobalization>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OnlineRetailSystem.Actors.CustomerSubdomain\OnlineRetailSystem.Actors.CustomerSubdomain.csproj" />
+    <ProjectReference Include="..\OnlineRetailSystem.Actors.OrderSubdomain\OnlineRetailSystem.Actors.OrderSubdomain.csproj" />
+    <ProjectReference Include="..\OnlineRetailSystem.Actors.Orleans\OnlineRetailSystem.Actors.Orleans.csproj" />
+    <ProjectReference Include="..\OnlineRetailSystem.Actors.ProductSubdomain\OnlineRetailSystem.Actors.ProductSubdomain.csproj" />
+    <ProjectReference Include="..\OnlineRetailSystem.Actors.ShoppingCartSubdomain\OnlineRetailSystem.Actors.ShoppingCartSubdomain.csproj" />
+  </ItemGroup>
+
+</Project>
