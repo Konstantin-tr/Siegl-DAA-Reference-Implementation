@@ -21,17 +21,9 @@ namespace OnlineRetailSystem.Actors.ProductSubdomain.Actors.ExternalWorkflows
             var productRepo = GrainFactory.GetGrain<IProductRepository>(0);
             var product = GrainFactory.GetGrain<IProductActor>(newId);
 
-            CommandResponse result = null!;
+            var result = await product.Create(productName, productDescription, priceInEuro, availableStock);
 
-            async Task Create()
-            {
-                result = await product.Create(productName, productDescription, priceInEuro, availableStock);
-            }
-
-            await Task.WhenAll(
-                productRepo.AddProduct(newId),
-                Create()
-            );
+            await productRepo.AddProduct(newId);
 
             return new(result.IsSuccess, result.IsSuccess ? new(newId) : null, result.Message);
         }

@@ -19,9 +19,9 @@ namespace OnlineRetailSystem.Host.StartupTasks
             var cartId = Guid.NewGuid().ToString();
             var customerId = Guid.NewGuid().ToString();
 
-            await SeedProducts(grainFactory);
             await SeedCart(grainFactory, cartId, customerId);
             await SeedCustomer(grainFactory, customerId);
+            await SeedProducts(grainFactory);
         }
 
         private static async Task SeedCart(IGrainFactory grainFactory, string cartId, string customerId)

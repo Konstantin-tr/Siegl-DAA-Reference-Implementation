@@ -1,0 +1,31 @@
+version: '3.4'
+
+services:
+  onlineretailsystem.host:
+    image: ${DOCKER_REGISTRY-}onlineretailsystemhost
+    build:
+      context: .
+      dockerfile: OnlineRetailSystem.Host/Dockerfile
+
+
+  onlineretailsystem.host2:
+    image: ${DOCKER_REGISTRY-}onlineretailsystemhost
+    build:
+      context: .
+      dockerfile: OnlineRetailSystem.Host/Dockerfile
+
+  db:
+    image: postgres
+    restart: always
+    # set shared memory limit when using docker-compose
+    shm_size: 128mb
+    volumes:
+      - ./postgres-scripts:/docker-entrypoint-initdb.d
+    environment:
+      POSTGRES_PASSWORD: postgres
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
