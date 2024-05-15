@@ -39,5 +39,11 @@ namespace OnlineRetailSystem.Actors.CustomerSubdomain.Actors.Domain
     }
 
     [Serializable]
-    public record CustomerData(string FirstName, string? MiddleName, string LastName);
+    public record CustomerData(string FirstName, string? MiddleName, string LastName)
+    {
+        public CustomerData(): this("", null, "")
+        {
+
+        }
+    }
 }

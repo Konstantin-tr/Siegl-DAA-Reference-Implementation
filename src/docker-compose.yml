@@ -2,6 +2,8 @@ version: '3.4'
 
 services:
   onlineretailsystem.host:
+    environment:
+      POSTGRES_CONNECTION: User ID=postgres;Password=postgres;Host=db;Port=5432;Database=postgres;Pooling=true;Connection Lifetime=0;
     image: ${DOCKER_REGISTRY-}onlineretailsystemhost
     build:
       context: .
@@ -9,6 +11,8 @@ services:
 
 
   onlineretailsystem.host2:
+    environment:
+      POSTGRES_CONNECTION: User ID=postgres;Password=postgres;Host=db;Port=5432;Database=postgres;Pooling=true;Connection Lifetime=0;
     image: ${DOCKER_REGISTRY-}onlineretailsystemhost
     build:
       context: .

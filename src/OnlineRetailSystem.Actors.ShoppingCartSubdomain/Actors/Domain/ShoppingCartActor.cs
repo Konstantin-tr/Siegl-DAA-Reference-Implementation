@@ -40,7 +40,7 @@ namespace OnlineRetailSystem.Actors.CustomerSubdomain.Actors.Domain
                     throw new ActorCommandException("Quantity cannot be less than 1.");
                 }
 
-                state.Items = items.Add(id, new() { ProductId = productId, OrderItemId = id, Quantity = quantity });
+                items.Add(id, new() { ProductId = productId, OrderItemId = id, Quantity = quantity });
 
                 return new(true, new(id), null);
             });
@@ -50,7 +50,7 @@ namespace OnlineRetailSystem.Actors.CustomerSubdomain.Actors.Domain
         {
             return _state.PerformUpdate(s =>
             {
-                s.Items = s.Items.Clear();
+                s.Items.Clear();
             });
         }
 
@@ -75,7 +75,7 @@ namespace OnlineRetailSystem.Actors.CustomerSubdomain.Actors.Domain
                     throw new ActorCommandException("Product does not exsit in shopping cart.");
                 }
 
-                state.Items = items.Remove(id);
+                items.Remove(id);
 
                 return new(true, null);
             });
@@ -110,11 +110,11 @@ namespace OnlineRetailSystem.Actors.CustomerSubdomain.Actors.Domain
     internal class ShoppingCartState()
     {
         [Id(0)]
-        public ImmutableDictionary<string, ShoppingCartItem> Items
+        public Dictionary<string, ShoppingCartItem> Items
         {
             get;
             set;
-        } = ImmutableDictionary<string, ShoppingCartItem>.Empty;
+        } = new();
     }
 
     [GenerateSerializer]

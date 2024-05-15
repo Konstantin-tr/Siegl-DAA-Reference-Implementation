@@ -5,22 +5,39 @@
 // <summary>This file is part of the DAA reference implementation.</summary>
 
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using OnlineRetailSystem.Host.StartupTasks;
+using Orleans.Configuration;
+using Orleans.Storage;
 
 namespace OnlineRetailSystem.Actors.Orleans
 {
     public static class Extensions
     {
-        public static IHostBuilder AddDistributedActorsArchitecture(this IHostBuilder host)
+        public static IHostBuilder AddDistributedActorsArchitecture(this IHostBuilder host, string? dbConnection)
         {
             host.UseOrleans((_, siloBuilder) =>
             {
+                siloBuilder.UseTransactions()
+                .AddStartupTask<SeedDataTask>();
+
+                if (dbConnection is not null)
+                {
+                    siloBuilder.AddAdoNetGrainStorage("online-retail", new Action<AdoNetGrainStorageOptions>(a =>
+                    {
+                        a.Invariant = "Npgsql";
+                        a.ConnectionString = dbConnection;
+                    }));
+
+                    siloBuilder.UseLocalhostClustering();
+
+                    return;
+                }
 
                 siloBuilder
                 .UseLocalhostClustering()
                 .UseTransactions()
-                .AddMemoryGrainStorage("online-retail")
-                .AddStartupTask<SeedDataTask>();
+                .AddMemoryGrainStorage("online-retail");
 
             });
 

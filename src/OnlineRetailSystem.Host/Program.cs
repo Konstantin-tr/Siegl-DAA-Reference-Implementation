@@ -15,16 +15,16 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Host.AddDistributedActorsArchitecture();
+var postgresConfig = builder.Configuration.GetValue<string?>("POSTGRES_CONNECTION");
+
+builder.Host.AddDistributedActorsArchitecture(postgresConfig);
 
 var app = builder.Build();
-
 
 // Configure the HTTP request pipeline.
 
 app.UseSwagger();
 app.UseSwaggerUI();
-
 
 app.UseHttpsRedirection();
 

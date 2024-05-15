@@ -29,10 +29,7 @@ namespace OnlineRetailSystem.Actors.ShoppingCartSubdomain.Actors.Demo
                 return;
             }
 
-            _repo.State = state with
-            {
-                Carts = state.Carts.Add(id, new(id, customerId))
-            };
+            state.Carts.Add(id, new(id, customerId));
 
             await _repo.WriteStateAsync();
         }
@@ -44,9 +41,9 @@ namespace OnlineRetailSystem.Actors.ShoppingCartSubdomain.Actors.Demo
     }
 
     [Serializable]
-    public record ShoppingCartRepositoryState(ImmutableDictionary<string, ShoppingCartRepositoryItem> Carts)
+    public record ShoppingCartRepositoryState(Dictionary<string, ShoppingCartRepositoryItem> Carts)
     {
-        public ShoppingCartRepositoryState() : this(ImmutableDictionary<string, ShoppingCartRepositoryItem>.Empty)
+        public ShoppingCartRepositoryState() : this(new Dictionary<string, ShoppingCartRepositoryItem>())
         {
         }
     };

@@ -46,7 +46,7 @@ namespace OnlineRetailSystem.Actors.CustomerSubdomain.Actors.Domain
                         Quantity = i.Quantity
                     }
                 )
-                .ToImmutableDictionary(s => s.OrderItemId);
+                .ToDictionary(s => s.OrderItemId);
 
                 var totalPrice = orderItems.Values.Aggregate(0, (acc, curr) => acc + curr.OrderPrice * curr.Quantity);
 
@@ -110,7 +110,7 @@ namespace OnlineRetailSystem.Actors.CustomerSubdomain.Actors.Domain
         public Invoice Invoice { get; set; } = new();
 
         [Id(2)]
-        public ImmutableDictionary<string, OrderItem> Items { get; set; } = ImmutableDictionary<string, OrderItem>.Empty;
+        public Dictionary<string, OrderItem> Items { get; set; } = new();
     }
 
     [GenerateSerializer]
