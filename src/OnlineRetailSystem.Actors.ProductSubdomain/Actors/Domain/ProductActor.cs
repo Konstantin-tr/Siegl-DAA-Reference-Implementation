@@ -4,9 +4,11 @@
 // <author>Konstantin Siegl, BSc.</author>
 // <summary>This file is part of the DAA reference implementation.</summary>
 
+using Microsoft.Extensions.Logging;
 using OnlineRetailSystem.Actors.Core;
 using OnlineRetailSystem.Actors.ProductSubdomain.Contracts.Domain;
 using Orleans.Concurrency;
+using Orleans.Runtime;
 using Orleans.Transactions.Abstractions;
 
 namespace OnlineRetailSystem.Actors.ProductSubdomain.Actors.Domain
@@ -15,13 +17,17 @@ namespace OnlineRetailSystem.Actors.ProductSubdomain.Actors.Domain
     internal class ProductActor
     (
         [TransactionalState(stateName: "product", storageName: "online-retail")]
-        ITransactionalState<ProductData> data
+        ITransactionalState<ProductData> data,
+        ILogger<ProductActor> logger,
+        ILocalSiloDetails siloInfo
     ) : Grain, IProductActor
     {
         private readonly ITransactionalState<ProductData> _data = data;
 
         public Task<ProductInfo?> GetData()
         {
+            logger.LogInformation("Getting product data for product {0} from silo {1}", this.GetGrainId().Key.ToString(), siloInfo.Name);
+
             return _data.PerformRead((state) =>
             {
                 if (!state.IsCreated || state.IsDeleted)
